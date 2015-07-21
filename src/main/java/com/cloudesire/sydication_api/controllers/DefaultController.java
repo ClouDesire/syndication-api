@@ -16,8 +16,10 @@ import com.liberologico.cloudesire.cmw.restclient.resources.InvoiceClient;
 import com.liberologico.cloudesire.cmw.restclient.resources.SubscriptionClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -32,6 +34,7 @@ public class DefaultController
     private CmwRestClient apiClient;
 
     @RequestMapping ( "/event" )
+    @ResponseStatus ( HttpStatus.NO_CONTENT )
     public void handleEvent( @RequestBody EventDTO event ) throws RuntimeRestException, RestException
     {
         log.debug( "Received {} {} {}", event.getEntityName(), event.getEntityId(), event.getType() );
