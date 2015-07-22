@@ -3,7 +3,7 @@ package com.cloudesire.sydication_api.controllers;
 import com.cloudesire.tisana4j.exceptions.RestException;
 import com.cloudesire.tisana4j.exceptions.RuntimeRestException;
 import com.liberologico.cloudesire.cmw.model.dto.CompanyDTO;
-import com.liberologico.cloudesire.cmw.model.dto.EventDTO;
+import com.liberologico.cloudesire.cmw.model.dto.EventNotificationDTO;
 import com.liberologico.cloudesire.cmw.model.dto.InvoiceDTO;
 import com.liberologico.cloudesire.cmw.model.dto.MyUserDTO;
 import com.liberologico.cloudesire.cmw.model.dto.ProductVersionDTO;
@@ -36,16 +36,16 @@ public class DefaultController
 
     @RequestMapping ( value = "/event", method = RequestMethod.POST)
     @ResponseStatus ( HttpStatus.NO_CONTENT )
-    public void handleEvent( @RequestBody EventDTO event ) throws RuntimeRestException, RestException
+    public void handleEvent( @RequestBody EventNotificationDTO event ) throws RuntimeRestException, RestException
     {
-        log.debug( "Handling notification for {} with id {} of type {}", event.getEntityName(), event.getEntityId(), event.getType() );
+        log.debug( "Handling notification for {} with id {} of type {}", event.getEntity(), event.getId(), event.getType() );
 
-        if ( "Subscription".equals( event.getEntityName() ) ) handleSubscription( event );
+        if ( "Subscription".equals( event.getEntity() ) ) handleSubscription( event );
 
-        if ( "Invoice".equals( event.getEntityName() ) ) handleInvoice( event );
+        if ( "Invoice".equals( event.getEntity() ) ) handleInvoice( event );
     }
 
-    private void handleInvoice( EventDTO event ) throws RuntimeRestException, RestException
+    private void handleInvoice( EventNotificationDTO event ) throws RuntimeRestException, RestException
     {
         if ( CmwEventType.MODIFIED.equals( event.getType() ) )
         {
@@ -53,7 +53,7 @@ public class DefaultController
             final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
             final CompanyClient companyClient = apiClient.getCompanyClient();
 
-            InvoiceDTO invoice = invoiceClient.get( event.getEntityId() );
+            InvoiceDTO invoice = invoiceClient.get( event.getId() );
             SubscriptionDTO subscription = subscriptionClient.get( invoice.getSubscription() );
 
             if (invoice.isPaid() && subscription.getDeploymentStatus().equals( DeploymentStatusEnum.PENDING ))
@@ -79,14 +79,14 @@ public class DefaultController
         }
     }
 
-    private void handleSubscription( EventDTO event ) throws RuntimeRestException, RestException
+    private void handleSubscription( EventNotificationDTO event ) throws RuntimeRestException, RestException
     {
         if (CmwEventType.MODIFIED.equals( event.getType()) || CmwEventType.DELETED.equals( event.getType()))
         {
             final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
             final CompanyClient companyClient = apiClient.getCompanyClient();
 
-            SubscriptionDTO subscription = subscriptionClient.get( event.getEntityId() );
+            SubscriptionDTO subscription = subscriptionClient.get( event.getId() );
             if (subscription.getDeploymentStatus().equals( DeploymentStatusEnum.UNDEPLOY_SENT ))
             {
                 MyUserDTO user = apiClient.getUserClient().get( subscription.getBuyer() );
