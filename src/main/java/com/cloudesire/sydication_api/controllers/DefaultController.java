@@ -56,7 +56,7 @@ public class DefaultController
 
     private void handleInvoice( EventNotificationDTO event ) throws RuntimeRestException, RestException
     {
-        if ( CmwEventType.MODIFIED.equals( event.getType() ) )
+        if ( CmwEventType.MODIFIED.toString().equals( event.getType() ) )
         {
             final InvoiceClient invoiceClient = apiClient.getInvoiceClient();
             final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
@@ -90,13 +90,14 @@ public class DefaultController
 
     private void handleSubscription( EventNotificationDTO event ) throws RuntimeRestException, RestException
     {
-        if (CmwEventType.MODIFIED.equals( event.getType()) || CmwEventType.DELETED.equals( event.getType()))
+        if (CmwEventType.MODIFIED.toString().equals( event.getType()) || CmwEventType.DELETED.toString().equals(
+                event.getType() ))
         {
             final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
             final CompanyClient companyClient = apiClient.getCompanyClient();
 
             SubscriptionDTO subscription = subscriptionClient.get( event.getId() );
-            if (subscription.getDeploymentStatus().equals( DeploymentStatusEnum.UNDEPLOY_SENT ))
+            if (DeploymentStatusEnum.UNDEPLOY_SENT.toString().equals(subscription.getDeploymentStatus()))
             {
                 MyUserDTO user = apiClient.getUserClient().get( subscription.getBuyer() );
                 CompanyDTO company = companyClient.get( user.getCompany() );
