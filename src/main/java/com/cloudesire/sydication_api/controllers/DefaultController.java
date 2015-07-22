@@ -38,7 +38,7 @@ public class DefaultController
     @ResponseStatus ( HttpStatus.NO_CONTENT )
     public void handleEvent( @RequestBody EventDTO event ) throws RuntimeRestException, RestException
     {
-        log.debug( "Received {} {} {}", event.getEntityName(), event.getEntityId(), event.getType() );
+        log.debug( "Handling notification for {} with id {} of type {}", event.getEntityName(), event.getEntityId(), event.getType() );
 
         if ( "Subscription".equals( event.getEntityName() ) ) handleSubscription( event );
 
@@ -94,6 +94,7 @@ public class DefaultController
                 company.setMaxPublishedProduct( 0 );
                 companyClient.update( company.getId(), company );
                 subscription.setDeploymentStatus( DeploymentStatusEnum.UNDEPLOYED );
+                log.info("Subscription {} set to undeployed", subscription.getId());
             }
         }
     }
