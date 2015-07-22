@@ -17,6 +17,7 @@ import com.liberologico.cloudesire.cmw.restclient.resources.SubscriptionClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,8 +37,16 @@ public class DefaultController
 
     @RequestMapping ( value = "/event", method = RequestMethod.POST)
     @ResponseStatus ( HttpStatus.NO_CONTENT )
-    public void handleEvent( @RequestBody EventNotificationDTO event ) throws RuntimeRestException, RestException
+    public void handleEvent( @RequestBody EventNotificationDTO event ) throws Exception
     {
+        if (
+                StringUtils.isEmpty( event.getEntity() ) ||
+                StringUtils.isEmpty( event.getId() ) ||
+                StringUtils.isEmpty( event.getType() ))
+        {
+            throw new IllegalArgumentException( "Event seems malformed" );
+        }
+
         log.debug( "Handling notification for {} with id {} of type {}", event.getEntity(), event.getId(), event.getType() );
 
         if ( "Subscription".equals( event.getEntity() ) ) handleSubscription( event );
