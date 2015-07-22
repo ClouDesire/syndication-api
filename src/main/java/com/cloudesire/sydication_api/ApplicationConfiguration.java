@@ -1,5 +1,7 @@
 package com.cloudesire.sydication_api;
 
+import com.cloudesire.tisana4j.exceptions.RestException;
+import com.cloudesire.tisana4j.exceptions.RuntimeRestException;
 import com.liberologico.cloudesire.cmw.restclient.CmwRestClient;
 import com.liberologico.cloudesire.cmw.restclient.resources.impl.CmwRestClientImpl;
 import lombok.Setter;
@@ -24,19 +26,25 @@ public class ApplicationConfiguration
     @Setter
     private String superPassword;
     @Setter
+    private Boolean checkApiOnBoot;
+    @Setter
     private String url;
 
     @Bean ( name = "vendorApiClient" )
-    public CmwRestClient getVendorApiClient()
+    public CmwRestClient getVendorApiClient() throws RuntimeRestException, RestException
     {
         log.info( "Initializing vendor cmw-rest-client with username {} against {}", username, url );
-        return new CmwRestClientImpl( username, password, url );
+        CmwRestClientImpl client = new CmwRestClientImpl( username, password, url );
+        if ( checkApiOnBoot ) client.getUserClient().getMe();
+        return client;
     }
 
     @Bean ( name = "adminApiClient" )
-    public CmwRestClient getAdminApiClient()
+    public CmwRestClient getAdminApiClient() throws RuntimeRestException, RestException
     {
         log.info( "Initializing admin cmw-rest-client with username {} against {}", superUsername, url );
-        return new CmwRestClientImpl( superUsername, superPassword, url );
+        CmwRestClientImpl client = new CmwRestClientImpl( superUsername, superPassword, url );
+        if ( checkApiOnBoot ) client.getUserClient().getMe();
+        return client;
     }
 }
