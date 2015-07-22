@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "syndication")
+@ConfigurationProperties ( prefix = "syndication" )
 public class ApplicationConfiguration
 {
     private static final Logger log = LoggerFactory.getLogger( ApplicationConfiguration.class );
