@@ -32,8 +32,10 @@ public class DefaultController
 {
     private static final Logger log = LoggerFactory.getLogger( DefaultController.class );
 
-    @Resource
-    private CmwRestClient apiClient;
+    @Resource(name = "vendorApiClient")
+    private CmwRestClient vendorApiClient;
+    @Resource(name = "vendorApiClient")
+    private CmwRestClient adminApiClient;
 
     @RequestMapping ( value = "/event", method = RequestMethod.POST)
     @ResponseStatus ( HttpStatus.NO_CONTENT )
@@ -58,9 +60,9 @@ public class DefaultController
     {
         if ( CmwEventType.MODIFIED.toString().equals( event.getType() ) )
         {
-            final InvoiceClient invoiceClient = apiClient.getInvoiceClient();
-            final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
-            final CompanyClient companyClient = apiClient.getCompanyClient();
+            final InvoiceClient invoiceClient = vendorApiClient.getInvoiceClient();
+            final SubscriptionClient subscriptionClient = vendorApiClient.getSubscriptionClient();
+            final CompanyClient companyClient = vendorApiClient.getCompanyClient();
 
             InvoiceDTO invoice = invoiceClient.get( event.getId() );
             SubscriptionDTO subscription = subscriptionClient.get( invoice.getSubscription() );
@@ -68,17 +70,17 @@ public class DefaultController
             if (invoice.isPaid() && subscription.getDeploymentStatus().equals( DeploymentStatusEnum.PENDING ))
             {
                 invoice.getNominee().getUrl();
-                MyUserDTO user = apiClient.getUserClient().get( invoice.getNominee() );
+                MyUserDTO user = vendorApiClient.getUserClient().get( invoice.getNominee() );
                 CompanyDTO company = companyClient.get( user.getCompany() );
 
-                ProductVersionDTO productVersion = apiClient.getProductVersionClient()
+                ProductVersionDTO productVersion = vendorApiClient.getProductVersionClient()
                         .get( subscription.getProductVersion() );
                 if (productVersion.getName().equalsIgnoreCase( "Premium" ))
                     company.setMaxPublishedProduct( 100 );
                 else
                     company.setMaxPublishedProduct( 1 );
 
-                companyClient.update( company.getId(), company );
+                adminApiClient.getCompanyClient().update( company.getId(), company );
                 log.info( "Set maxPublishedProduct={} companyName={} companyId={}", company.getMaxPublishedProduct(),
                         company.getId(), company.getName() );
 
@@ -93,18 +95,20 @@ public class DefaultController
         if (CmwEventType.MODIFIED.toString().equals( event.getType()) || CmwEventType.DELETED.toString().equals(
                 event.getType() ))
         {
-            final SubscriptionClient subscriptionClient = apiClient.getSubscriptionClient();
-            final CompanyClient companyClient = apiClient.getCompanyClient();
+            final SubscriptionClient subscriptionClient = vendorApiClient.getSubscriptionClient();
+            final CompanyClient companyClient = vendorApiClient.getCompanyClient();
 
             SubscriptionDTO subscription = subscriptionClient.get( event.getId() );
             if (DeploymentStatusEnum.UNDEPLOY_SENT.toString().equals(subscription.getDeploymentStatus()))
             {
-                MyUserDTO user = apiClient.getUserClient().get( subscription.getBuyer() );
+                MyUserDTO user = vendorApiClient.getUserClient().get( subscription.getBuyer() );
                 CompanyDTO company = companyClient.get( user.getCompany() );
+
                 company.setMaxPublishedProduct( 0 );
-                companyClient.update( company.getId(), company );
-                subscription.setDeploymentStatus( DeploymentStatusEnum.UNDEPLOYED );
-                log.info("Subscription {} set to undeployed", subscription.getId());
+                adminApiClient.getCompanyClient().update( company.getId(), company );
+
+                subscriptionClient.update( subscription.getId(), DeploymentStatusEnum.UNDEPLOYED, null, null);
+                log.info("Subscription {} set to UNDEPLOYED", subscription.getId());
             }
         }
     }

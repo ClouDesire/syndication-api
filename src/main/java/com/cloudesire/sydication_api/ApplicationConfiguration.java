@@ -20,12 +20,23 @@ public class ApplicationConfiguration
     @Setter
     private String password;
     @Setter
+    private String superUsername;
+    @Setter
+    private String superPassword;
+    @Setter
     private String url;
 
-    @Bean
-    public CmwRestClient getApiClient()
+    @Bean ( name = "vendorApiClient" )
+    public CmwRestClient getVendorApiClient()
     {
-        log.info( "Initializing cmw-rest-client with username {} against {}", username, url );
+        log.info( "Initializing vendor cmw-rest-client with username {} against {}", username, url );
         return new CmwRestClientImpl( username, password, url );
+    }
+
+    @Bean ( name = "adminApiClient" )
+    public CmwRestClient getAdminApiClient()
+    {
+        log.info( "Initializing admin cmw-rest-client with username {} against {}", superUsername, url );
+        return new CmwRestClientImpl( superUsername, superPassword, url );
     }
 }
