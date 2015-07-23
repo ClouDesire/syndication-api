@@ -76,12 +76,12 @@ public class DefaultController
                 ProductVersionDTO productVersion = vendorApiClient.getProductVersionClient()
                         .get( subscription.getProductVersion() );
                 if (productVersion.getName().equalsIgnoreCase( "Premium" ))
-                    company.setMaxPublishedProduct( 100 );
+                    company.setMaxPublishedProducts( 100 );
                 else
-                    company.setMaxPublishedProduct( 1 );
+                    company.setMaxPublishedProducts( 1 );
 
                 adminApiClient.getCompanyClient().update( company.getId(), company );
-                log.info( "Set maxPublishedProduct={} companyName={} companyId={}", company.getMaxPublishedProduct(),
+                log.info( "Set maxPublishedProduct={} companyName={} companyId={}", company.getMaxPublishedProducts(),
                         company.getId(), company.getName() );
 
                 subscriptionClient.update( subscription.getId(), DeploymentStatusEnum.DEPLOYED, null, null );
@@ -104,7 +104,7 @@ public class DefaultController
                 MyUserDTO user = vendorApiClient.getUserClient().get( subscription.getBuyer() );
                 CompanyDTO company = companyClient.get( user.getCompany() );
 
-                company.setMaxPublishedProduct( 0 );
+                company.setMaxPublishedProducts( 0 );
                 adminApiClient.getCompanyClient().update( company.getId(), company );
 
                 subscriptionClient.update( subscription.getId(), DeploymentStatusEnum.UNDEPLOYED, null, null);
