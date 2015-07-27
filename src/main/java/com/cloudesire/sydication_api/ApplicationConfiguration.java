@@ -18,9 +18,9 @@ public class ApplicationConfiguration
     private static final Logger log = LoggerFactory.getLogger( ApplicationConfiguration.class );
 
     @Setter
-    private String username;
+    private String vendorUsername;
     @Setter
-    private String password;
+    private String vendorPassword;
     @Setter
     private String superUsername;
     @Setter
@@ -33,8 +33,8 @@ public class ApplicationConfiguration
     @Bean ( name = "vendorApiClient" )
     public CmwRestClient getVendorApiClient() throws RuntimeRestException, RestException
     {
-        log.info( "Initializing vendor cmw-rest-client with username {} against {}", username, url );
-        CmwRestClientImpl client = new CmwRestClientImpl( username, password, url );
+        log.info( "Initializing vendor cmw-rest-client with username {} against {}", vendorUsername, url );
+        CmwRestClientImpl client = new CmwRestClientImpl( vendorUsername, vendorPassword, url );
         if ( checkApiOnBoot ) client.getUserClient().getMe();
         return client;
     }
