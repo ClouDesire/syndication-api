@@ -22,9 +22,9 @@ public class ApplicationConfiguration
     @Setter
     private String vendorPassword;
     @Setter
-    private String superUsername;
+    private String username;
     @Setter
-    private String superPassword;
+    private String password;
     @Setter
     private Boolean checkApiOnBoot;
     @Setter
@@ -42,8 +42,8 @@ public class ApplicationConfiguration
     @Bean ( name = "adminApiClient" )
     public CmwRestClient getAdminApiClient() throws RuntimeRestException, RestException
     {
-        log.info( "Initializing admin cmw-rest-client with username {} against {}", superUsername, url );
-        CmwRestClientImpl client = new CmwRestClientImpl( superUsername, superPassword, url );
+        log.info( "Initializing admin cmw-rest-client with username {} against {}", username, url );
+        CmwRestClientImpl client = new CmwRestClientImpl( username, password, url );
         if ( checkApiOnBoot ) client.getUserClient().getMe();
         return client;
     }
