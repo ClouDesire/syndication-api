@@ -9,11 +9,9 @@ import com.liberologico.cloudesire.cmw.model.enums.CmwEventType;
 import com.liberologico.cloudesire.cmw.restclient.CmwRestClient;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockserver.client.server.MockServerClient;
-import org.mockserver.junit.MockServerRule;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +34,8 @@ public class IntegrationTest
 
     private RestClient restClient;
 
-    @Rule
-    public MockServerRule mockServerRule =  new MockServerRule(8082, this);
+    //@Rule
+    //public MockServerRule mockServerRule =  new MockServerRule(8082, this);
 
     private MockServerClient mockServerClient;
 
