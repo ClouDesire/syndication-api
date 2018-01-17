@@ -1,4 +1,4 @@
-package com.cloudesire.sydication_api;
+package com.cloudesire.syndication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

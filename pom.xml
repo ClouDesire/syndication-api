@@ -4,19 +4,20 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cloudesire</groupId>
+	<groupId>com.cloudesire.syndication</groupId>
 	<artifactId>syndication-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<dockerfile-maven-plugin.version>1.3.7</dockerfile-maven-plugin.version>
 	</properties>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.5.RELEASE</version>
+		<version>1.5.9.RELEASE</version>
 	</parent>
 	<dependencies>
 		<!-- Spring Boot -->
@@ -44,15 +45,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.liberologico.cloudesire.platform</groupId>
-			<artifactId>cmw-rest-client</artifactId>
-			<version>2.10.9-SNAPSHOT</version>
+			<groupId>com.cloudesire.platform</groupId>
+			<artifactId>cloudesire-api-client</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -60,23 +55,24 @@
 		<finalName>syndication-api</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.2.11</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>${dockerfile-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<imageName>docker.cloudesire.com/syndication-api</imageName>
-					<dockerDirectory>docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<repository>spotify/foobar</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>
