@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 public class IntegrationTest
 {
-
     @Resource
     private CloudesireClient cloudesireClient;
 
@@ -35,5 +34,4 @@ public class IntegrationTest
         List<CloudProviderDTO> providers = callExecutor.execute( client.getCloudProviderApi().getAll() );
         assertThat( providers ).isNotEmpty();
     }
-
 }
