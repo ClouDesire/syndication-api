@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  maven: cloudesire/maven@dev:gionn
+  maven: cloudesire/maven@0.1.0
 
 jobs:
   build:
