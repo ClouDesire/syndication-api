@@ -1,7 +1,7 @@
 package com.cloudesire.syndication.services;
 
-import com.liberologico.cloudesire.cmw.model.dto.MyUserDTO;
-import com.liberologico.cloudesire.cmw.model.dto.SubscriptionDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
 
 public interface SubscriptionService
 {

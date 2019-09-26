@@ -4,10 +4,10 @@ import com.cloudesire.platform.apiclient.CloudesireClient;
 import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
 import com.cloudesire.platform.apiclient.api.SubscriptionApi;
 import com.cloudesire.platform.apiclient.api.UserApi;
+import com.cloudesire.platform.apiclient.dto.model.dto.EventNotificationDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
 import com.cloudesire.syndication.services.SubscriptionService;
-import com.liberologico.cloudesire.cmw.model.dto.EventNotificationDTO;
-import com.liberologico.cloudesire.cmw.model.dto.MyUserDTO;
-import com.liberologico.cloudesire.cmw.model.dto.SubscriptionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -64,7 +64,6 @@ public class DefaultController
                 subscriptionService.undeploy( subscription, user );
                 break;
             default:
-                return;
         }
     }
 }
