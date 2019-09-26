@@ -28,8 +28,6 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             mv /tmp/docker/* /usr/bin
 
-      #- run: mkdir -p ~/.m2 && touch ~/.m2/settings.xml
-
       - maven/with_cache:
           mvn_path: ./mvnw
           steps:
