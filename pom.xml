@@ -38,13 +38,6 @@
 		<!-- END Spring Boot -->
 
 		<dependency>
-			<groupId>org.mock-server</groupId>
-			<artifactId>mockserver-netty</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.cloudesire.platform</groupId>
 			<artifactId>cloudesire-api-client</artifactId>
 			<version>1.15.0</version>

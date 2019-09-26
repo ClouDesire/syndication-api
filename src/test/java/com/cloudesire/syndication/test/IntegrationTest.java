@@ -2,7 +2,7 @@ package com.cloudesire.syndication.test;
 
 import com.cloudesire.platform.apiclient.CloudesireClient;
 import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
-import com.cloudesire.platform.apiclient.dto.model.dto.ProductDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.CloudProviderDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,8 +32,8 @@ public class IntegrationTest
                 .setUsername( null )
                 .setPassword( null )
                 .build();
-        List<ProductDTO> products = callExecutor.execute( client.getProductApi().getAll( ) );
-        assertThat( products ).isNotEmpty();
+        List<CloudProviderDTO> providers = callExecutor.execute( client.getCloudProviderApi().getAll() );
+        assertThat( providers ).isNotEmpty();
     }
 
 }
