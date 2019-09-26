@@ -2,21 +2,21 @@ package com.cloudesire.syndication.services.impl;
 
 import com.cloudesire.platform.apiclient.CloudesireClient;
 import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
+import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionPatchDTO;
+import com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum;
+import com.cloudesire.platform.apiclient.dto.model.enums.OrderType;
 import com.cloudesire.syndication.services.SubscriptionService;
-import com.liberologico.cloudesire.cmw.model.dto.MyUserDTO;
-import com.liberologico.cloudesire.cmw.model.dto.SubscriptionDTO;
-import com.liberologico.cloudesire.cmw.model.dto.SubscriptionPatchDTO;
-import com.liberologico.cloudesire.cmw.model.enums.DeploymentStatusEnum;
-import com.liberologico.cloudesire.cmw.model.enums.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-import static com.liberologico.cloudesire.cmw.model.enums.DeploymentStatusEnum.DEPLOYED;
-import static com.liberologico.cloudesire.cmw.model.enums.DeploymentStatusEnum.PENDING;
-import static com.liberologico.cloudesire.cmw.model.enums.DeploymentStatusEnum.UNDEPLOYED;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.DEPLOYED;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.PENDING;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.UNDEPLOYED;
 
 @Component
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -78,7 +78,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
     private void updateStatus( DeploymentStatusEnum status, Integer subscriptionId )
     {
         SubscriptionPatchDTO patch = new SubscriptionPatchDTO();
-        patch.setDeploymentStatus( status.toString() );
+        patch.setDeploymentStatus( status );
         callExecutor.execute(
                 cloudesireClient.getSubscriptionApi().partialUpdate( subscriptionId, patch )
         );
