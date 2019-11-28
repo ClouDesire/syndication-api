@@ -6,27 +6,18 @@ orbs:
 jobs:
   build:
     docker:
-      - image: openjdk:8-jdk
-        environment:
-          - BASE_BUILD_NUM: 0
+      - image: circleci/openjdk:8u222-jdk-stretch
 
     environment:
       MAVEN_OPTS: "-Xmx2048m"
+      GIT_ROOT: "/home/circleci"
+      BASE_BUILD_NUM: 0
 
     steps:
       - checkout
 
       - setup_remote_docker:
           version: 18.09.3
-
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="18.09.3"
-            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
 
       - maven/with_cache:
           mvn_path: ./mvnw
