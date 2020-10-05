@@ -5,7 +5,7 @@ import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
 import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionPatchDTO;
-import com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum;
+import com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus;
 import com.cloudesire.platform.apiclient.dto.model.enums.OrderType;
 import com.cloudesire.syndication.services.SubscriptionService;
 import org.slf4j.Logger;
@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.DEPLOYED;
-import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.PENDING;
-import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatusEnum.UNDEPLOYED;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.*;
 
 @Component
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -75,7 +73,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
         updateStatus( UNDEPLOYED, subscription.getId() );
     }
 
-    private void updateStatus( DeploymentStatusEnum status, Integer subscriptionId )
+    private void updateStatus( DeploymentStatus status, Integer subscriptionId )
     {
         SubscriptionPatchDTO patch = new SubscriptionPatchDTO();
         patch.setDeploymentStatus( status );
