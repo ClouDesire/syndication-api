@@ -7,7 +7,9 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8u222-jdk-stretch
-
+        auth: 
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     environment:
       MAVEN_OPTS: "-Xmx2048m"
       GIT_ROOT: "/home/circleci"
@@ -33,11 +35,13 @@ workflows:
 
   build:
     jobs:
-      - build
+      - build:
+          context: common-backend
 
   nightly:
     jobs:
-      - build
+      - build:
+          context: common-backend
     triggers:
       - schedule:
           cron: "0 6 * * *"
