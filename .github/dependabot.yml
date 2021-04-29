@@ -1,0 +1,32 @@
+version: 2
+registries:
+  maven-repository-archiva-cloudesire-com-repository-internal:
+    type: maven-repository
+    url: https://archiva.cloudesire.com/repository/internal
+    username: dependabot
+    password: "${{secrets.MAVEN_REPOSITORY_ARCHIVA_CLOUDESIRE_COM_REPOSITORY_INTERNAL_PASSWORD}}"
+  maven-repository-archiva-cloudesire-com-repository-snapshots:
+    type: maven-repository
+    url: https://archiva.cloudesire.com/repository/snapshots
+    username: dependabot
+    password: "${{secrets.MAVEN_REPOSITORY_ARCHIVA_CLOUDESIRE_COM_REPOSITORY_SNAPSHOTS_PASSWORD}}"
+
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "01:00"
+    timezone: Europe/Rome
+  open-pull-requests-limit: 10
+  reviewers:
+  - gionn
+  ignore:
+  - dependency-name: org.springframework.boot:spring-boot-starter-parent
+    versions:
+    - 2.4.1
+    - 2.4.2
+  rebase-strategy: disabled
+  registries:
+  - maven-repository-archiva-cloudesire-com-repository-internal
+  - maven-repository-archiva-cloudesire-com-repository-snapshots
