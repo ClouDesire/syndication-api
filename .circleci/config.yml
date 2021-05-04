@@ -1,32 +1,41 @@
 version: 2.1
 
 orbs:
-  maven: cloudesire/maven@0.1.1
+  cloudesire: cloudesire/common@0.13
+
+defaults: &defaults
+  executor:
+    name: cloudesire/docker_java
+    java_version: "11.0"
 
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:8u222-jdk-stretch
-
-    environment:
-      MAVEN_OPTS: "-Xmx2048m"
-      GIT_ROOT: "/home/circleci"
-      BASE_BUILD_NUM: 0
+    <<: *defaults
 
     steps:
       - checkout
 
-      - setup_remote_docker:
-          version: 18.09.3
+      - setup_remote_docker
 
-      - maven/with_cache:
+      - cloudesire/maven_with_cache:
           mvn_path: ./mvnw
           steps:
             - run:
                 name: Build
                 command: ./mvnw -B install
 
-      - maven/aggregate_test_results
+      - cloudesire/maven_aggregate_tests_results
+
+      - run:
+          name: Prepare for docker_run_and_test
+          command: |
+            echo "SERVER_PORT=8080" >> docker_env_file.list
+
+      - cloudesire/docker_run_and_test:
+          container_name: syndication-api
+          image_name: cloudesire/syndication-api
+          image_version: 1.0.0-SNAPSHOT
+          container_port_range: "8080:8080"
 
 workflows:
   version: 2
