@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cloudesire: cloudesire/common@0
+  cloudesire: cloudesire/common@dev:3d1c937
 
 defaults: &defaults
   executor:
@@ -27,13 +27,14 @@ jobs:
       - cloudesire/maven_aggregate_tests_results
 
       - run:
-          name: Prepare docker env file
+          name: Prepare for docker_run_and_test
           command: |
-            # Add the required container environment variables for the next docker_run_and_test command. Es:
             echo "SERVER_PORT=8080" >> docker_env_file.list
 
       - cloudesire/docker_run_and_test:
-          container_name: cloudesire/syndication-api:1.0.0-SNAPSHOT
+          container_name: syndication-api
+          image_name: cloudesire/syndication-api
+          image_version: 1.0.0-SNAPSHOT
           container_port_range: "8080:8080"
 
 workflows:
