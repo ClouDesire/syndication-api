@@ -26,6 +26,16 @@ jobs:
 
       - cloudesire/maven_aggregate_tests_results
 
+      - run:
+          name: Prepare docker env file
+          command: |
+            # Add the required container environment variables for the next docker_run_and_test command. Es:
+            echo "SERVER_PORT=8080" >> docker_env_file.list
+
+      - cloudesire/docker_run_and_test:
+          container_name: cloudesire/syndication-api:1.0.0-SNAPSHOT
+          container_port_range: "8080:8080"
+
 workflows:
   version: 2
 
