@@ -1,0 +1,28 @@
+version: 2
+registries:
+  maven-internal-releases:
+    type: maven-repository
+    url: https://archiva.cloudesire.com/repository/internal
+    username: ${{secrets.MAVEN_USER}}
+    password: ${{secrets.MAVEN_PASS}}
+  maven-internal-snapshots:
+    type: maven-repository
+    url: https://archiva.cloudesire.com/repository/snapshots
+    username: ${{secrets.MAVEN_USER}}
+    password: ${{secrets.MAVEN_PASS}}
+updates:
+  - package-ecosystem: maven
+    directory: "/"
+    schedule:
+      interval: weekly
+    registries:
+      - maven-internal-releases
+      - maven-internal-snapshots
+    reviewers:
+      - gionn
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+    reviewers:
+      - gionn
