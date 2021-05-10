@@ -18,11 +18,11 @@ updates:
     registries:
       - maven-internal-releases
       - maven-internal-snapshots
-    reviewers:
+    assignees:
       - gionn
   - package-ecosystem: docker
     directory: "/"
     schedule:
       interval: weekly
-    reviewers:
+    assignees:
       - gionn
