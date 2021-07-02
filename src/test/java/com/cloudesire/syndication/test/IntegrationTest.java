@@ -24,7 +24,7 @@ public class IntegrationTest
     public void up()
     {
         CloudesireClient client = cloudesireClient.newBuilder()
-                .setBaseUrl( "https://staging.cloudesire.com/api" )
+                .setBaseUrl( "https://backend-dev-eng.cloudesire.com/api" )
                 .setUsername( null )
                 .setPassword( null )
                 .build();
