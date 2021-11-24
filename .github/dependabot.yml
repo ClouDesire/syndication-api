@@ -20,11 +20,11 @@ updates:
       - maven-internal-releases
       - maven-internal-snapshots
     assignees:
-      - malteo
+      - gionn
   - package-ecosystem: docker
     directory: "/"
     schedule:
       interval: weekly
       day: sunday
     assignees:
-      - malteo
+      - gionn
