@@ -2,14 +2,14 @@ version: 2
 registries:
   maven-internal-releases:
     type: maven-repository
-    url: https://archiva.cloudesire.com/repository/internal
-    username: ${{secrets.MAVEN_USER}}
-    password: ${{secrets.MAVEN_PASS}}
+    url: https://nexus.cloudesire.com/repository/cloudesire-maven-snapshots/
+    username: ${{secrets.NEXUS_MAVEN_USER}}
+    password: ${{secrets.NEXUS_MAVEN_PASS}}
   maven-internal-snapshots:
     type: maven-repository
-    url: https://archiva.cloudesire.com/repository/snapshots
-    username: ${{secrets.MAVEN_USER}}
-    password: ${{secrets.MAVEN_PASS}}
+    url: https://nexus.cloudesire.com/repository/cloudesire-maven-releases/
+    username: ${{secrets.NEXUS_MAVEN_USER}}
+    password: ${{secrets.NEXUS_MAVEN_PASS}}
 updates:
   - package-ecosystem: maven
     directory: "/"
