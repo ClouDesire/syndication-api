@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
-public class IntegrationTest
+class IntegrationTest
 {
     @Resource
     private CloudesireClient cloudesireClient;
@@ -21,7 +21,7 @@ public class IntegrationTest
     private CloudesireClientCallExecutor callExecutor;
 
     @Test
-    public void up()
+    void up()
     {
         CloudesireClient client = cloudesireClient.newBuilder()
                 .setBaseUrl( "https://backend-dev-eng.cloudesire.com/api" )
