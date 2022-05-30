@@ -3,7 +3,7 @@ package com.cloudesire.syndication.services.impl;
 import com.cloudesire.platform.apiclient.CloudesireClient;
 import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
 import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
-import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDetailDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionPatchDTO;
 import com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus;
 import com.cloudesire.platform.apiclient.dto.model.enums.OrderType;
@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.*;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.DEPLOYED;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.PENDING;
+import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.UNDEPLOYED;
 
 @Component
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -27,7 +29,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
     private CloudesireClientCallExecutor callExecutor;
 
     @Override
-    public void create( SubscriptionDTO subscription, MyUserDTO user )
+    public void create( SubscriptionDetailDTO subscription, MyUserDTO user )
     {
         if ( subscription.getDeploymentStatus() == PENDING )
         {
@@ -45,7 +47,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
     }
 
     @Override
-    public void modify( SubscriptionDTO subscription, MyUserDTO user )
+    public void modify( SubscriptionDetailDTO subscription, MyUserDTO user )
     {
         switch ( subscription.getDeploymentStatus() )
         {
@@ -67,7 +69,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
     }
 
     @Override
-    public void undeploy( SubscriptionDTO subscription, MyUserDTO user )
+    public void undeploy( SubscriptionDetailDTO subscription, MyUserDTO user )
     {
         log.info( "Unprovision tenant and release resources" );
         updateStatus( UNDEPLOYED, subscription.getId() );
