@@ -6,7 +6,7 @@ import com.cloudesire.platform.apiclient.api.SubscriptionApi;
 import com.cloudesire.platform.apiclient.api.UserApi;
 import com.cloudesire.platform.apiclient.dto.model.dto.EventNotificationDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
-import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDTO;
+import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDetailDTO;
 import com.cloudesire.syndication.services.SubscriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class DefaultController
     private void handleSubscription( EventNotificationDTO event )
     {
         SubscriptionApi subscriptionApi = cloudesireClient.getSubscriptionApi();
-        SubscriptionDTO subscription = callExecutor.execute( subscriptionApi.get( event.getId() ) );
+        SubscriptionDetailDTO subscription = callExecutor.execute( subscriptionApi.get( event.getId() ) );
         UserApi userApi = cloudesireClient.getUserApi();
         MyUserDTO user = callExecutor.execute( userApi.get( subscription.getBuyer().getId() ) );
         switch ( event.getType() )
