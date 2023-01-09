@@ -1,4 +1,4 @@
-FROM openjdk:8u181-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 MAINTAINER ClouDesire <dev@cloudesire.com>
 
 ADD target/syndication-api.jar app.jar
