@@ -1,13 +1,8 @@
 version: 2
 registries:
-  maven-internal-releases:
+  cloudesire-maven-group:
     type: maven-repository
-    url: https://nexus.cloudesire.com/repository/cloudesire-maven-snapshots/
-    username: ${{secrets.NEXUS_MAVEN_USER}}
-    password: ${{secrets.NEXUS_MAVEN_PASS}}
-  maven-internal-snapshots:
-    type: maven-repository
-    url: https://nexus.cloudesire.com/repository/cloudesire-maven-releases/
+    url: https://nexus.cloudesire.com/repository/cloudesire-maven-group/
     username: ${{secrets.NEXUS_MAVEN_USER}}
     password: ${{secrets.NEXUS_MAVEN_PASS}}
 updates:
@@ -17,8 +12,7 @@ updates:
       interval: weekly
       day: sunday
     registries:
-      - maven-internal-releases
-      - maven-internal-snapshots
+      - cloudesire-maven-group
     assignees:
       - malteo
   - package-ecosystem: docker
