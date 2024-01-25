@@ -8,6 +8,8 @@ registries:
 updates:
   - package-ecosystem: maven
     directory: "/"
+    commit-message:
+      prefix: "chore(maven)"
     schedule:
       interval: weekly
       day: sunday
@@ -17,6 +19,8 @@ updates:
       - malteo
   - package-ecosystem: docker
     directory: "/"
+    commit-message:
+      prefix: "chore(docker)"
     schedule:
       interval: weekly
       day: sunday
