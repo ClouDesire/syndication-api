@@ -8,6 +8,7 @@ import com.cloudesire.platform.apiclient.dto.model.dto.EventNotificationDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.MyUserDTO;
 import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionDetailDTO;
 import com.cloudesire.syndication.services.SubscriptionService;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 @RestController
 @RequestMapping( "/api" )
