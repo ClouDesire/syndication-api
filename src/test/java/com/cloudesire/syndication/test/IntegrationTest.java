@@ -3,10 +3,10 @@ package com.cloudesire.syndication.test;
 import com.cloudesire.platform.apiclient.CloudesireClient;
 import com.cloudesire.platform.apiclient.CloudesireClientCallExecutor;
 import com.cloudesire.platform.apiclient.dto.model.dto.CloudProviderDTO;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

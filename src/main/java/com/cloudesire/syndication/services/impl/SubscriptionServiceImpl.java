@@ -8,11 +8,10 @@ import com.cloudesire.platform.apiclient.dto.model.dto.SubscriptionPatchDTO;
 import com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus;
 import com.cloudesire.platform.apiclient.dto.model.enums.OrderType;
 import com.cloudesire.syndication.services.SubscriptionService;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.DEPLOYED;
 import static com.cloudesire.platform.apiclient.dto.model.enums.DeploymentStatus.PENDING;
