@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: maven
     directory: "/"
     commit-message:
-      prefix: "chore(maven)"
+      prefix: "deps(maven)"
     schedule:
       interval: weekly
       day: sunday
@@ -20,7 +20,7 @@ updates:
   - package-ecosystem: docker
     directory: "/"
     commit-message:
-      prefix: "chore(docker)"
+      prefix: "deps(docker)"
     schedule:
       interval: weekly
       day: sunday
