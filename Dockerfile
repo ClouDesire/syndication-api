@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-alpine@sha256:ee09bfd4218b1296231588981fd1e4f74843ca585d5fd6a37bf6078e34c847c7
+FROM eclipse-temurin:21-alpine@sha256:a3ef08aadbf2d925a6af28ab644f9974df9bd053d3728caa4b28329ae968e7ad
 LABEL org.opencontainers.image.authors="Cloudesire dev team <cloudesire-dev@eng.it>"
 
 ADD target/syndication-api.jar app.jar
