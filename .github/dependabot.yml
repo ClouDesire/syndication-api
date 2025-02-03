@@ -12,7 +12,8 @@ updates:
       prefix: "deps(maven)"
     schedule:
       interval: weekly
-      day: sunday
+      day: monday
+      time: 07:30
     registries:
       - cloudesire-maven-group
     assignees:
@@ -23,6 +24,7 @@ updates:
       prefix: "deps(docker)"
     schedule:
       interval: weekly
-      day: sunday
+      day: monday
+      time: 07:30
     assignees:
       - malteo
