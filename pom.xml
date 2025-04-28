@@ -9,16 +9,16 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
-		<dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
+		<java.version>21</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<cache.version>2019112800</cache.version>
 	</properties>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.0</version>
+		<version>3.4.5</version>
 	</parent>
 	<dependencies>
 		<!-- Spring Boot -->
@@ -50,32 +50,25 @@
 	</dependencies>
 
 	<build>
-		<finalName>syndication-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>${dockerfile-maven-plugin.version}</version>
+				<configuration>
+					<image>
+						<name>cloudesire/${project.artifactId}:${project.version}</name>
+						<env>
+							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+						</env>
+					</image>
+				</configuration>
 				<executions>
 					<execution>
-						<id>default</id>
 						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
+							<goal>build-image-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<repository>cloudesire/${project.build.finalName}</repository>
-					<tag>${project.version}</tag>
-					<buildArgs>
-						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

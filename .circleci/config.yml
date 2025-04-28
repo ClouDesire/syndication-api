@@ -21,8 +21,8 @@ jobs:
           mvn_path: ./mvnw
           steps:
             - run:
-                name: Build
-                command: ./mvnw -B install
+                name: Package
+                command: ./mvnw -B package
 
       - cloudesire/maven_aggregate_tests_results
 

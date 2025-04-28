@@ -12,7 +12,7 @@ automatic provisioning of a SaaS application on a
 Project uses Maven to compile artifact and build a docker image with:
 
 ```
-./mvnw clean install
+./mvnw clean package
 ```
 
 ## Run
