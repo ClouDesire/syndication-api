@@ -18,13 +18,3 @@ updates:
       - cloudesire-maven-group
     assignees:
       - malteo
-  - package-ecosystem: docker
-    directory: "/"
-    commit-message:
-      prefix: "deps(docker)"
-    schedule:
-      interval: weekly
-      day: monday
-      time: 07:30
-    assignees:
-      - malteo
