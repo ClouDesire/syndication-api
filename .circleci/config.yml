@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cloudesire: cloudesire/common@0.13
+  cloudesire: cloudesire/common@2
 
 defaults: &defaults
   executor:
@@ -9,11 +9,33 @@ defaults: &defaults
     java_version: "21.0"
 
 jobs:
+  test:
+    <<: *defaults
+    circleci_ip_ranges: true
+
+    steps:
+      - checkout
+
+      - cloudesire/maven_with_cache:
+          mvn_path: ./mvnw
+          steps:
+            - run:
+                name: Test
+                command: ./mvnw -B test
+
+      - cloudesire/maven_aggregate_tests_results
+
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - .
+
   build:
     <<: *defaults
 
     steps:
-      - checkout
+      - attach_workspace:
+          at: /home/circleci
 
       - setup_remote_docker
 
@@ -22,9 +44,7 @@ jobs:
           steps:
             - run:
                 name: Package
-                command: ./mvnw -B package
-
-      - cloudesire/maven_aggregate_tests_results
+                command: ./mvnw -B package -DskipTests
 
       - run:
           name: Prepare for docker_run_and_test
@@ -38,15 +58,19 @@ jobs:
           container_port_range: "8080:8080"
 
 workflows:
-  version: 2
-
   build-and-deploy:
     jobs:
-      - build
+      - test
+      - build:
+          requires:
+            - test
 
   weekly:
     jobs:
-      - build
+      - test
+      - build:
+          requires:
+            - test
     triggers:
       - schedule:
           cron: "0 11 * * 2"
