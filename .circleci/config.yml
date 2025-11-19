@@ -20,7 +20,7 @@ jobs:
           mvn_path: ./mvnw
           steps:
             - run:
-                name: Package
+                name: Test
                 command: ./mvnw -B test
 
       - cloudesire/maven_aggregate_tests_results
