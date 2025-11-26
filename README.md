@@ -2,10 +2,12 @@
 
 [![CircleCI](https://circleci.com/gh/ClouDesire/syndication-api.svg?style=svg)](https://circleci.com/gh/ClouDesire/syndication-api)
 
-An example Spring Boot 3.x project to implement the [Cloudesire syndicated
-integration](https://docs.cloudesire.com/docs/syndication.html) to enable
-automatic provisioning of a SaaS application on a
-[Cloudesire](https://cloudesire.com) marketplace.
+An example Spring Boot 4.x project to implement the [Cloudesire syndicated
+integration][syndication] to enable automatic provisioning of a SaaS
+application on a [Cloudesire][cloudesire] marketplace.
+
+[syndication]: https://docs.cloudesire.com/docs/syndication.html
+[cloudesire]: https://cloudesire.com
 
 ## Build
 
